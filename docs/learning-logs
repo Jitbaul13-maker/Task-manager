@@ -1,0 +1,242 @@
+# 📘 Task Manager DevOps Project - Learning Log
+
+> This document serves as a chronological record of my learning, challenges, solutions, and key takeaways while building a production-ready Spring Boot application with a complete DevOps pipeline.
+
+---
+
+# Session 1 - Project Initialization
+
+**Date:** 30 July 2026
+
+## Objectives
+
+- Set up the Spring Boot project
+- Initialize a local Git repository
+- Create a GitHub repository
+- Establish a clean project structure
+- Prepare the project for future DevOps stages
+
+---
+
+# Challenges Faced
+
+## 1. Nested Project Directory
+
+### Problem
+
+After extracting the Spring Boot project, the directory structure became:
+
+```text
+devops_project/
+└── Task_Manager/
+    └── Task_Manager/
+        ├── pom.xml
+        ├── src/
+        └── ...
+```
+
+The actual project was nested one level deeper than intended.
+
+### Root Cause
+
+The ZIP archive was extracted into a folder that had the same name as the project, resulting in an additional directory level.
+
+### Resolution
+
+Moved the project contents to the correct location so the final structure became:
+
+```text
+Task_Manager/
+├── pom.xml
+├── src/
+├── .mvn/
+├── mvnw
+└── ...
+```
+
+### Lesson Learned
+
+Always verify the project structure immediately after extracting downloaded archives.
+
+The project root should directly contain:
+
+- `pom.xml`
+- `src/`
+- `.mvn/`
+- `mvnw`
+
+---
+
+## 2. Windows Zone.Identifier Files
+
+### Problem
+
+Several unexpected files appeared, including:
+
+```text
+pom.xml:Zone.Identifier
+mvnw:Zone.Identifier
+HELP.md:Zone.Identifier
+```
+
+### Root Cause
+
+Windows automatically attaches alternate data streams (`Zone.Identifier`) to downloaded files to indicate they originated from the Internet. When accessed through WSL, these appeared as regular files.
+
+### Resolution
+
+Removed all metadata files using:
+
+```bash
+find . -name "*:Zone.Identifier" -delete
+```
+
+### Lesson Learned
+
+These files are not part of the application source code and should never be committed to Git.
+
+---
+
+## 3. Git Repository Placement
+
+### Problem
+
+Git was initially initialized outside the actual Spring Boot project.
+
+```text
+devops_project/
+├── .git
+└── Task_Manager/
+```
+
+### Why It Matters
+
+This configuration would track unrelated files such as ZIP archives and other directories, making the repository harder to maintain.
+
+### Resolution
+
+Initialized Git inside the project root.
+
+Final structure:
+
+```text
+Task_Manager/
+├── .git/
+├── pom.xml
+├── src/
+└── ...
+```
+
+### Lesson Learned
+
+A Git repository should usually be initialized at the root of a single project.
+
+---
+
+## 4. Duplicate README Files
+
+### Problem
+
+The repository contained:
+
+```text
+README
+README.md
+```
+
+### Resolution
+
+Removed the duplicate `README` file and retained `README.md`.
+
+### Lesson Learned
+
+GitHub automatically renders `README.md`.
+
+Maintaining only one README avoids confusion.
+
+---
+
+## 5. Unnecessary ZIP Archive
+
+### Problem
+
+The repository still contained the downloaded ZIP archive after extraction.
+
+### Resolution
+
+Deleted the archive after verifying the extracted project.
+
+### Lesson Learned
+
+Repositories should contain only source code and project-related files.
+
+Temporary downloads and archives should not be committed.
+
+---
+
+# Commands Used
+
+```bash
+git init
+
+git branch -M main
+
+git add .
+
+git commit -m "Initial Spring Boot project"
+
+find . -name "*:Zone.Identifier" -delete
+```
+
+---
+
+# Final Project Structure
+
+```text
+Task_Manager/
+├── .git/
+├── .mvn/
+├── src/
+├── docs/
+├── pom.xml
+├── README.md
+├── mvnw
+├── mvnw.cmd
+└── .gitignore
+```
+
+---
+
+# Key Takeaways
+
+- Verify directory structures before starting development.
+- Keep the repository clean and organized.
+- Remove Windows metadata files when working in WSL.
+- Initialize Git at the project root.
+- Commit only project-related files.
+- Make small, meaningful commits throughout development.
+
+---
+
+# Looking Ahead
+
+Upcoming milestones include:
+
+- Building the Task Manager REST API
+- PostgreSQL integration
+- Dockerizing the application
+- Docker Compose
+- Jenkins CI/CD
+- Kubernetes deployment
+- Prometheus monitoring
+- Grafana dashboards
+- Infrastructure automation
+
+Each milestone will include:
+
+- Objectives
+- Challenges
+- Solutions
+- Lessons Learned
+- Useful Commands
+- Best Practices
