@@ -70,4 +70,28 @@ class UserServiceTest {
 
         verify(repo, never()).save(any(User.class));
     }
+
+    @Test
+    void getUserById_shouldReturnUser_whenUserExists() {
+
+        User existingUser = new User();
+        existingUser.setId(1L);
+        existingUser.setName("ABC");
+        existingUser.setEmail("abc@gmail.com");
+
+        when(repo.findById(1L)).thenReturn(Optional.of(existingUser));
+
+        UserResponseDto user = service.getUserById(1L);
+
+        assertEquals(existingUser.getEmail(), user.getEmail());
+        assertEquals(existingUser.getName(), user.getName());
+    }
+
+    @Test
+    void getUserById_shouldThrowException_whenUserDoesNotExist() {
+
+        when(repo.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> service.getUserById(1L));
+    }
 }

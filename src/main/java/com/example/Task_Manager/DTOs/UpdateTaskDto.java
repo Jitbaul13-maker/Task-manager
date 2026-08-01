@@ -2,7 +2,6 @@ package com.example.Task_Manager.DTOs;
 
 import com.example.Task_Manager.ENUMs.TaskPriority;
 import com.example.Task_Manager.ENUMs.TaskStatus;
-import com.example.Task_Manager.Models.User;
 import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Getter;
 import lombok.Setter;
