@@ -1,5 +1,7 @@
 package com.example.Task_Manager.DTOs;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class UpdateUserDto {
     private String name;
+    @Email
     private String email;
+    @Size(min = 8)
     private String password;
 }

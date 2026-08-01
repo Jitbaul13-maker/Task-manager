@@ -4,11 +4,12 @@ import com.example.Task_Manager.DTOs.CreateUserDto;
 import com.example.Task_Manager.DTOs.UpdateUserDto;
 import com.example.Task_Manager.DTOs.UserResponseDto;
 import com.example.Task_Manager.Services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class UserController {
 
     private final UserService service;
@@ -18,19 +19,19 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<UserResponseDto> createUsers(@RequestBody CreateUserDto dto){
+    public ResponseEntity<UserResponseDto> createUsers(@Valid @RequestBody CreateUserDto dto){
         UserResponseDto user = service.createUser(dto);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@RequestParam("id") Long id) {
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable("id") Long id) {
         UserResponseDto user = service.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserResponseDto> updateUser(@RequestParam("id") Long id, @RequestBody UpdateUserDto dto) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") Long id, @Valid@RequestBody UpdateUserDto dto) {
         UserResponseDto user = service.updateUser(id, dto);
         return ResponseEntity.ok(user);
     }

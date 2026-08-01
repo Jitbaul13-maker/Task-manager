@@ -57,7 +57,15 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("No user found!"));
 
         if (dto.getName() != null){ user.setName(dto.getName());}
-        if (dto.getEmail() != null){ user.setEmail(dto.getEmail());}
+        if (dto.getEmail() != null) {
+            Optional<User> existing = repo.findByEmail(dto.getEmail());
+
+            if (existing.isPresent() && !existing.get().getId().equals(id)) {
+                throw new RuntimeException("Email already in use");
+            }
+
+            user.setEmail(dto.getEmail());
+        }
         if (dto.getPassword() != null){ user.setPassword(encoder.encode(dto.getPassword()));}
 
         repo.save(user);

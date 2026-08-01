@@ -19,7 +19,8 @@ import java.time.LocalDateTime;
 public class Task {
 
     @Id
-    private Long Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -28,6 +29,7 @@ public class Task {
 
     private LocalDateTime createdAt;
     private  LocalDateTime updatedAt;
+    @Column(nullable = false)
     private LocalDate dueDate;
 
     @PrePersist
@@ -49,10 +51,10 @@ public class Task {
     private TaskPriority priority;
 
     @ManyToOne
-    @JoinColumn(name = "created_by", nullable = false)
+    @JoinColumn(name = "createdBy", nullable = false)
     private User createdBy;
 
     @ManyToOne
-    @JoinColumn(name = "assigned_to")
+    @JoinColumn(name = "assignedTo")
     private User assignedTo;
 }
