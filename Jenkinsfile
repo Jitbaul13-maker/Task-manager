@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DB_URL = 'jdbc:postgresql://taskmanager-postgres:5432/taskmanager'
+        DB_URL = 'jdbc:postgresql://postgres:5432/taskmanager'
     }
 
     stages {
