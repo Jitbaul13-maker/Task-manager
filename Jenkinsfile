@@ -29,10 +29,8 @@ pipeline {
         stage('Load Image Into Minikube') {
             steps {
                 sh '''
-                    docker save $IMAGE_NAME -o /tmp/task-manager-app.tar
-                    docker cp /tmp/task-manager-app.tar minikube:/tmp/task-manager-app.tar
-                    docker exec minikube ctr -n k8s.io images import /tmp/task-manager-app.tar
-                    rm /tmp/task-manager-app.tar
+                    docker save task-manager-app:v1 | \
+                    docker exec -i minikube ctr -n k8s.io images import -
                 '''
             }
         }
